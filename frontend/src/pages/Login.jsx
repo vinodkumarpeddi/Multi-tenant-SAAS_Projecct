@@ -3,150 +3,158 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
 
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        tenantSubdomain: ''
-    });
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    tenantSubdomain: ''
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-    const from = location.state?.from?.pathname || '/dashboard';
+  const from = location.state?.from?.pathname || '/dashboard';
+  const successMessage = location.state?.message;
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-        setError('');
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    setError('');
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-        setLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
-        try {
-            const response = await login(
-                formData.email,
-                formData.password,
-                formData.tenantSubdomain
-            );
+    try {
+      const response = await login(
+        formData.email,
+        formData.password,
+        formData.tenantSubdomain
+      );
 
-            if (response.success) {
-                navigate(from, { replace: true });
-            }
-        } catch (err) {
-            setError(err.message || 'Login failed');
-        } finally {
-            setLoading(false);
-        }
-    };
+      if (response.success) {
+        navigate(from, { replace: true });
+      }
+    } catch (err) {
+      setError(err.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <div className="auth-container">
-            {/* Animated Background Elements */}
-            <div className="auth-bg-elements">
-                <div className="bg-circle circle-1"></div>
-                <div className="bg-circle circle-2"></div>
-                <div className="bg-circle circle-3"></div>
-                <div className="bg-grid"></div>
-            </div>
+  return (
+    <div className="auth-container">
+      {/* Animated Background Elements */}
+      <div className="auth-bg-elements">
+        <div className="bg-circle circle-1"></div>
+        <div className="bg-circle circle-2"></div>
+        <div className="bg-circle circle-3"></div>
+        <div className="bg-grid"></div>
+      </div>
 
-            <div className="auth-card">
-                <div className="auth-header">
-                    <div className="auth-logo">
-                        <span>⚡</span>
-                    </div>
-                    <h1 className="auth-title">Welcome Back!</h1>
-                    <p className="auth-subtitle">Sign in to continue to your dashboard</p>
-                </div>
+      <div className="auth-card">
+        <div className="auth-header">
+          <div className="auth-logo">
+            <span>⚡</span>
+          </div>
+          <h1 className="auth-title">Welcome Back!</h1>
+          <p className="auth-subtitle">Sign in to continue to your dashboard</p>
+        </div>
 
-                {error && (
-                    <div className="alert alert-error">
-                        <span className="alert-icon">⚠️</span>
-                        {error}
-                    </div>
-                )}
+        {successMessage && (
+          <div className="alert alert-success" style={{ marginBottom: '1.5rem' }}>
+            <span className="alert-icon">✅</span>
+            {successMessage}
+          </div>
+        )}
 
-                <form className="auth-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label className="form-label">
-                            <span className="label-icon">🏢</span>
-                            Organization Subdomain
-                        </label>
-                        <input
-                            type="text"
-                            name="tenantSubdomain"
-                            className="form-input"
-                            placeholder="your-company"
-                            value={formData.tenantSubdomain}
-                            onChange={handleChange}
-                        />
-                        <span className="form-hint">Leave empty for super admin access</span>
-                    </div>
+        {error && (
+          <div className="alert alert-error">
+            <span className="alert-icon">⚠️</span>
+            {error}
+          </div>
+        )}
 
-                    <div className="form-group">
-                        <label className="form-label">
-                            <span className="label-icon">✉️</span>
-                            Email Address
-                        </label>
-                        <input
-                            type="email"
-                            name="email"
-                            className="form-input"
-                            placeholder="you@company.com"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">
+              <span className="label-icon">🏢</span>
+              Organization Subdomain
+            </label>
+            <input
+              type="text"
+              name="tenantSubdomain"
+              className="form-input"
+              placeholder="your-company"
+              value={formData.tenantSubdomain}
+              onChange={handleChange}
+            />
+            <span className="form-hint">Leave empty for super admin access</span>
+          </div>
 
-                    <div className="form-group">
-                        <label className="form-label">
-                            <span className="label-icon">🔒</span>
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            name="password"
-                            className="form-input"
-                            placeholder="••••••••"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+          <div className="form-group">
+            <label className="form-label">
+              <span className="label-icon">✉️</span>
+              Email Address
+            </label>
+            <input
+              type="email"
+              name="email"
+              className="form-input"
+              placeholder="you@company.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                    <button type="submit" className="btn btn-primary auth-submit" disabled={loading}>
-                        {loading ? (
-                            <>
-                                <span className="btn-spinner"></span>
-                                Signing in...
-                            </>
-                        ) : (
-                            <>
-                                <span>Sign In</span>
-                                <span className="btn-arrow">→</span>
-                            </>
-                        )}
-                    </button>
-                </form>
+          <div className="form-group">
+            <label className="form-label">
+              <span className="label-icon">🔒</span>
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              className="form-input"
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-                <div className="auth-divider">
-                    <span>New to our platform?</span>
-                </div>
+          <button type="submit" className="btn btn-primary auth-submit" disabled={loading}>
+            {loading ? (
+              <>
+                <span className="btn-spinner"></span>
+                Signing in...
+              </>
+            ) : (
+              <>
+                <span>Sign In</span>
+                <span className="btn-arrow">→</span>
+              </>
+            )}
+          </button>
+        </form>
 
-                <div className="auth-footer">
-                    <Link to="/register" className="auth-link">
-                        Create an organization →
-                    </Link>
-                </div>
-            </div>
+        <div className="auth-divider">
+          <span>New to our platform?</span>
+        </div>
 
-            <style>{`
+        <div className="auth-footer">
+          <Link to="/register" className="auth-link">
+            Create an organization →
+          </Link>
+        </div>
+      </div>
+
+      <style>{`
         .auth-bg-elements {
           position: fixed;
           inset: 0;
@@ -305,8 +313,8 @@ const Login = () => {
           margin-right: 0.5rem;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Login;

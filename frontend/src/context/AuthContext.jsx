@@ -47,6 +47,19 @@ export const AuthProvider = ({ children }) => {
         return response;
     };
 
+    const register = async (data) => {
+        const response = await api.registerTenant(data);
+        if (response.success) {
+            // After registration, we don't automatically log in 
+            // because building the tenant might take a moment 
+            // or we want them to login explicitly. 
+            // In this app, the backend returns the tenant/admin info.
+            // If we want auto-login, we'd need a token back.
+            // Let's check api/index.js for registerTenant.
+        }
+        return response;
+    };
+
     const logout = async () => {
         try {
             await api.logout();
@@ -62,6 +75,7 @@ export const AuthProvider = ({ children }) => {
         user,
         loading,
         login,
+        register,
         logout,
         isAuthenticated: !!user,
         isSuperAdmin: user?.role === 'super_admin',

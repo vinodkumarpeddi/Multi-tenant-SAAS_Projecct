@@ -82,13 +82,13 @@ const Register = () => {
             const response = await register({
                 tenantName: formData.tenantName,
                 subdomain: formData.subdomain,
-                adminName: formData.adminName,
-                email: formData.email,
-                password: formData.password
+                adminFullName: formData.adminName,
+                adminEmail: formData.email,
+                adminPassword: formData.password
             });
 
             if (response.success) {
-                navigate('/dashboard');
+                navigate('/login', { state: { message: 'Organization created successfully! Please sign in.' } });
             }
         } catch (err) {
             setError(err.message || 'Registration failed');
