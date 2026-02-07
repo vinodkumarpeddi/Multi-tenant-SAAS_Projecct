@@ -181,6 +181,7 @@ const login = async (req, res) => {
 
         // Verify password
         const isValidPassword = await bcrypt.compare(password, user.password_hash);
+
         if (!isValidPassword) {
             return response.unauthorized(res, 'Invalid credentials');
         }

@@ -83,9 +83,10 @@ const validateLogin = (data) => {
         errors.push('Password is required');
     }
 
-    if (!data.tenantSubdomain && !data.tenantId) {
-        errors.push('Tenant subdomain or ID is required');
-    }
+    // Super admin login doesn't require tenant info
+    // if (!data.tenantSubdomain && !data.tenantId) {
+    //    errors.push('Tenant subdomain or ID is required');
+    // }
 
     return errors;
 };
