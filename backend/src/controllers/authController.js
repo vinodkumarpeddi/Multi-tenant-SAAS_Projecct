@@ -113,7 +113,8 @@ const registerTenant = async (req, res) => {
  */
 const login = async (req, res) => {
     try {
-        const { email, password, tenantSubdomain, tenantId } = req.body;
+        const { email, password, tenantSubdomain, subdomain, tenantId } = req.body;
+        const effectiveSubdomain = tenantSubdomain || subdomain;
 
         // Validate input
         const errors = validateLogin(req.body);
@@ -124,10 +125,10 @@ const login = async (req, res) => {
         let tenant = null;
 
         // Find tenant by subdomain or ID
-        if (tenantSubdomain) {
+        if (effectiveSubdomain) {
             const tenantResult = await db.query(
                 'SELECT id, name, subdomain, status FROM tenants WHERE LOWER(subdomain) = LOWER($1)',
-                [tenantSubdomain]
+                [effectiveSubdomain]
             );
             if (tenantResult.rows.length === 0) {
                 return response.notFound(res, 'Tenant not found');

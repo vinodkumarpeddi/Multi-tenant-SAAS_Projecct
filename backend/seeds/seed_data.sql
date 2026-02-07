@@ -4,13 +4,13 @@
 -- ============================================
 -- 1. SUPER ADMIN (no tenant association)
 -- ============================================
--- Password: Admin@123 (bcrypt hashed with 10 rounds)
+-- Password: SuperAdmin123!
 INSERT INTO users (id, tenant_id, email, password_hash, full_name, role, is_active)
 VALUES (
     'a0000000-0000-0000-0000-000000000001',
     NULL,
     'superadmin@system.com',
-    '$2b$10$rQZQXEMZZJ1qVuvJGX.O0.5V5y5S5v5V5y5S5v5V5y5S5v5V5y5S5',
+    '$2b$10$sbwzl9Ap6SXZm5A6gFqjOOw7rPoUpJWL0/no9ePfVI4bQ6Sc1YCaS',
     'System Super Admin',
     'super_admin',
     true
@@ -33,37 +33,37 @@ VALUES (
 -- ============================================
 -- 3. DEMO TENANT USERS
 -- ============================================
--- Tenant Admin - Password: Demo@123
+-- Tenant Admin - Password: AdminPass123!
 INSERT INTO users (id, tenant_id, email, password_hash, full_name, role, is_active)
 VALUES (
     'c0000000-0000-0000-0000-000000000001',
     'b0000000-0000-0000-0000-000000000001',
     'admin@demo.com',
-    '$2b$10$rQZQXEMZZJ1qVuvJGX.O0.5V5y5S5v5V5y5S5v5V5y5S5v5V5y5S5',
+    '$2b$10$VkhxNgaETnPfRR7v7pEJwOLBdh5MwuDIrYrLxaNLSv9TRnvv0uSEe',
     'Demo Admin',
     'tenant_admin',
     true
 ) ON CONFLICT DO NOTHING;
 
--- User 1 - Password: User@123
+-- User 1 - Password: UserPass123!
 INSERT INTO users (id, tenant_id, email, password_hash, full_name, role, is_active)
 VALUES (
     'c0000000-0000-0000-0000-000000000002',
     'b0000000-0000-0000-0000-000000000001',
     'user1@demo.com',
-    '$2b$10$rQZQXEMZZJ1qVuvJGX.O0.5V5y5S5v5V5y5S5v5V5y5S5v5V5y5S5',
+    '$2b$10$QvUKgBeRzU99OoavqQ9TqOviDwdF1PD6/e4HBgwb3za3BcbIz0Kbi',
     'Demo User One',
     'user',
     true
 ) ON CONFLICT DO NOTHING;
 
--- User 2 - Password: User@123
+-- User 2 - Password: UserPass123!
 INSERT INTO users (id, tenant_id, email, password_hash, full_name, role, is_active)
 VALUES (
     'c0000000-0000-0000-0000-000000000003',
     'b0000000-0000-0000-0000-000000000001',
     'user2@demo.com',
-    '$2b$10$rQZQXEMZZJ1qVuvJGX.O0.5V5y5S5v5V5y5S5v5V5y5S5v5V5y5S5',
+    '$2b$10$QvUKgBeRzU99OoavqQ9TqOviDwdF1PD6/e4HBgwb3za3BcbIz0Kbi',
     'Demo User Two',
     'user',
     true

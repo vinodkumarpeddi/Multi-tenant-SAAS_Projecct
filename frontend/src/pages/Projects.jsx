@@ -50,7 +50,7 @@ const Projects = () => {
                     <h1 className="page-title">📁 Projects</h1>
                     <p className="page-subtitle">{projects.length} projects</p>
                 </div>
-                <button className="btn btn-primary" onClick={() => setShowModal(true)}>✨ New Project</button>
+                {!isSuperAdmin && <button className="btn btn-primary" onClick={() => setShowModal(true)}>✨ New Project</button>}
             </div>
 
             {projects.length === 0 ? (
@@ -58,7 +58,7 @@ const Projects = () => {
                     <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📁</div>
                     <h3>No projects yet</h3>
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Create your first project</p>
-                    <button className="btn btn-primary" onClick={() => setShowModal(true)}>🚀 Create Project</button>
+                    {!isSuperAdmin && <button className="btn btn-primary" onClick={() => setShowModal(true)}>🚀 Create Project</button>}
                 </div>
             ) : (
                 <div className="projects-grid">
